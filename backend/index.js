@@ -23,7 +23,7 @@ const servidor = http.createServer((pedido, resposta) => {
 
             if (!logge) {
                 resposta.writeHead(400)
-                resposta.end(JSON.stringify('./site/404.html'))
+                resposta.end(JSON.stringify('./frontend/view/404.html'))
                 return;
             }
             resposta.writeHead(200, { "Content-Type": "text/html" });
