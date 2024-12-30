@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/site/produtosNoSite.css">
+</head>
+
+<body>
+    <header id="abas-paginas">
+        <ul>
+            <a href="/">Produtos</a>
+            <a id="faleConosco">Fale Conosco</a>
+            <a id="sobreNos">Sobre nós</a>
+        </ul>
+    </header>
+
+
+    <main>
+        <header id="aba-mostra">
+            <img src="https://th.bing.com/th/id/OIP.w97-9Z3G6iQetvNIaVAF8wHaHa?rs=1&pid=ImgDetMain" alt="" id="aba">
+            <img src="https://th.bing.com/th/id/OIP.fr0VOwzLpsAI5fz-NWQSPwHaHa?rs=1&pid=ImgDetMain" alt="" id="logo">
+            <input type="text" id="pesquisar">
+            <a href="./login.html" id="entrar">Entre ou Cadastre-se</a>
+            <img src="https://th.bing.com/th/id/OIP.0B9qUkgn0IAUO6e2pP0pYQHaHa?rs=1&pid=ImgDetMain" alt=""
+                class="image">
+        </header>
+
+
+        <div id="exibicao-de-produtos">
+
+            <div id="organizar-anteriorEProximo">
+                <div id="anterior"></div>
+                <div id="imgs-de-exibicao"></div>
+                <div id="proximo"></div>
+            </div>
+
+            <div id="topOitoProdutos"></div>
+        </div>
+
+
+        <div id="produtosAAmostra">
+
+        </div>
+    </main>
+
+
+
+
+    <!-- aba escondida "fale conosco" -->
+    <div id="filtro">
+        <div id="caixa">
+            <button id="fecharAbaFaleConosco">X</button>
+
+            <div id="organizar-inputs">
+                <input type="text" id="nome-do-usuario" placeholder="Nome do usuario">
+                <input type="text" id="numero-do-usuario" placeholder="numero do usuario">
+            </div>
+
+            <input type="text" id="eMail-do-usuario" placeholder="Digete seu E-mail">
+            <input type="text" id="assunto-da-conversa" placeholder="Assunto da conversa">
+            <textarea name="" id="mensagem"></textarea>
+
+            <div id="buttoes">
+                <button id="enviarMensagem">Enviar</button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- aba escondida "sobre nos" -->
+
+    <div id="filtro-sobreNos">
+        <div id="texto">
+            <h1 id="titulo-do-texto"></h1>
+
+            <p id="detalhes-do-texto"></p>
+            <button id="sairDaAbaSobreNos">Fechar</button>
+        </div>
+    </div>
+
+
+
+
+    <!-- script ----------------------------------------------------------------------------------------------------------->
+    <script type="module">
+        const main = document.querySelector('#produtosAAmostra')
+
+        fetch('/bancoProdutos').then(r => r.json()).then(response => {
+            response.forEach(e => {
+                const card = document.createElement('div')
+                card.classList.add("card")
+
+                const foto = document.createElement('img')
+                foto.classList.add("foto")
+                foto.src = e.foto
+
+                const nome = document.createElement('h2')
+                nome.textContent = e.nome
+
+                const pedido = document.createElement('h2')
+                pedido.style.display = 'none'
+                pedido.textContent = e.pedido
+
+                const caracteristicas = document.createElement('h2')
+                caracteristicas.style.display = 'none'
+                caracteristicas.textContent = e.caracteristicas
+
+                card.appendChild(foto)
+                card.appendChild(caracteristicas)
+                card.appendChild(pedido)
+                card.appendChild(nome)
+                main.appendChild(card)
+                card.addEventListener('click', caracteristicasDosCards)
+            });
+        })
+
+
+        function caracteristicasDosCards(params) {
+            const filtroDaabaDeExibicaoDoProduto = document.createElement('div')
+            filtroDaabaDeExibicaoDoProduto.classList.add("filtroDaabaDeExibicaoDoProduto")
+
+            const abaDeExibicaoDoProduto = document.createElement('div')
+            abaDeExibicaoDoProduto.classList.add('abaDeExibicaoDoProduto')
+
+            const img = document.createElement('img')
+            img.classList.add('img')
+
+            const nomes = document.createElement('div')
+            nomes.classList.add('nomes')
+
+            const nomeDoProduto = document.createElement("h1")
+            nomeDoProduto.textContent = params.srcElement.children['3']['textContent']
+            nomeDoProduto.classList.add('nomeDoProduto')
+
+            const caracteristicasDoProduto = document.createElement("p")
+            caracteristicasDoProduto.textContent = params.srcElement.children['1']['textContent']
+            caracteristicasDoProduto.classList.add('caracteristicasDoProduto')
+
+            const buttonParaEnviarPedido = document.createElement('button')
+            buttonParaEnviarPedido.textContent = 'Pedir Agora'
+            buttonParaEnviarPedido.classList.add('buttonParaEnviarPedido')
+
+            const fecharAba = document.createElement('button')
+            fecharAba.textContent = "X"
+            fecharAba.classList.add('fecharAba')
+
+
+            abaDeExibicaoDoProduto.appendChild(fecharAba)
+            nomes.appendChild(nomeDoProduto)
+            nomes.appendChild(caracteristicasDoProduto)
+            nomes.appendChild(buttonParaEnviarPedido)
+            abaDeExibicaoDoProduto.appendChild(img)
+            abaDeExibicaoDoProduto.appendChild(nomes)
+            filtroDaabaDeExibicaoDoProduto.appendChild(abaDeExibicaoDoProduto)
+            document.body.appendChild(filtroDaabaDeExibicaoDoProduto)
+
+            fecharAba.addEventListener('click',()=>{
+                filtroDaabaDeExibicaoDoProduto.remove()
+            })
+        }
+
+
+        //aba "fale conosco" ======================================================================================================
+
+        const sairDaAba = document.querySelector("#fecharAbaFaleConosco")
+        const abaFaleConosco = document.querySelector("#faleConosco")
+        const filtroDiv = document.querySelector("#filtro")
+
+        function abrirAba() {
+            filtroDiv.style.display = 'flex'
+        }
+
+        function fecharAba() {
+            filtroDiv.style.display = 'none'
+        }
+
+        abaFaleConosco.addEventListener("click", abrirAba)
+        sairDaAba.addEventListener("click", fecharAba)
+
+        // enviar mensagem -------------------------------
+
+        const enviarMensagem = document.querySelector("#enviarMensagem")
+        const nomeDoUsuario = document.querySelector("#nome-do-usuario")
+        const numeroDoUsuario = document.querySelector("#numero-do-usuario")
+        const eMailDoUsuario = document.querySelector("#eMail-do-usuario")
+        const mensagemTextarea = document.querySelector("#mensagem")
+
+        function enviarMensagemPraOServidor() {
+            let nome = nomeDoUsuario.value
+            let eMail = eMailDoUsuario.value
+            let numero = numeroDoUsuario.value
+            let mensagem = mensagemTextarea.value
+
+            fetch('/enviarMensagem', {
+                method: "POST",
+                body: JSON.stringify({ nome, eMail, numero, mensagem })
+            })
+        }
+
+        enviarMensagem.addEventListener('click', enviarMensagemPraOServidor)
+
+
+
+
+        //aba "sobre nos" ==========================================================================================================
+        const abaSobreNos = document.querySelector("#sobreNos")
+        const filtroDiv2 = document.querySelector("#filtro-sobreNos")
+        const sairDaAbaSobreNos = document.querySelector("#sairDaAbaSobreNos")
+
+        function abrirAba2() {
+            filtroDiv2.style.display = 'flex'
+        }
+        
+        function fecharAba2() {
+            filtroDiv2.style.display = 'none'
+        }
+
+        abaSobreNos.addEventListener("click", abrirAba2)
+        sairDaAbaSobreNos.addEventListener("click", fecharAba2)
+
+        fetch('/bancoSobreNos').then(r => r.json()).then(response => {
+            response.forEach(e => {
+                console.log(e)
+                const tituloDoTexto = document.querySelector("#titulo-do-texto")
+                const detalhesDoTexto = document.querySelector("#detalhes-do-texto")
+
+                tituloDoTexto.textContent = e.titulo
+                detalhesDoTexto.textContent = e.texto
+            });
+        })
+
+
+        // menu de abas ============================================================================================================
+        const tresTracos = document.querySelector('#aba')
+        const header = document.querySelector('#abas-paginas')
+
+        function aparecerMenu() {
+            if (header.style.display === 'flex') {
+                header.style.display = 'none'
+                return
+            }
+            header.style.display = 'flex'
+        }
+
+        tresTracos.addEventListener('click', aparecerMenu)
+
+
+        // const number = 0
+        // const text = "ola"
+        // const array = [1,2,3,4,5]
+        // const pro = {a: 1,b: 2}
+
+        // array.forEach(e => {
+        //     console.log(e)
+        // });
+        // function name(params) {
+        //     console.log(params)
+        // }
+
+        // function name2(params) {
+        //     console.log(params * 2)
+        // }
+        // name2(1)
+    </script>
+</body>
+
+</html>

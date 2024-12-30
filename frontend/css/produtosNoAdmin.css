@@ -1,0 +1,352 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
+
+header{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 15%;
+    background-color: rgb(177, 177, 177);
+}
+
+ul{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 25%;
+    width: 100%;
+}
+
+a{
+    font-size: 40px;
+    text-decoration: none;
+    color: black;
+}
+
+#main-produtos{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    width: 85%;
+    border: solid black 1px;
+    overflow: scroll;
+}
+
+.caracteristicas{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 5%;
+    width: 80%;
+    background-color: rgb(180, 180, 180);
+}
+
+#adicionar-aba{
+    height: 100%;
+    width: 5%;
+}
+
+.produtos-adicionados{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 30px;
+    height: 5%;
+    width: 80%;
+    background-color: rgb(180, 180, 180);
+}
+
+.buttoes-div{
+    height: 100%;
+    width: 100px;
+    border: solid black 1px;
+}
+
+.alinhar{
+    height: 100%;
+    width: 70px;
+}
+
+/* "aba de excluir produto" ========================================== */
+
+.filtroDoRemoverProduto{
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    background-color: gray;    
+}
+
+.abaDoRemoverProduto{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    height: 25%;
+    width: 75%;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.mensagemDeConfirmacao{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    height: 40%;
+    width: 50%;
+    border: solid black 1px;
+    border-radius: 10px;
+}
+
+.buttoesDeConfirmarECancelarRemocao{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 40%;
+    width: 50%;
+}
+
+.buttonConfirmarRemocao{
+    height: 30px;
+    width: 150px;
+    border-radius: 5px;
+}
+
+.buttonCancelarRemocao{
+    height: 30px;
+    width: 150px;
+    border-radius: 5px;
+}
+
+
+/* aba escondida ====================================================================================*/
+#filtro{
+    display: none;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: gray;
+}
+
+#caixa{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 30%;
+    width: 50%;
+    background-color: white;
+}
+
+#nome-do-produto {
+    height: 15%;
+    width: 80%;
+}
+
+#foto-do-produto {
+    height: 15%;
+    width: 80%;
+}
+
+#caracteristicas-do-produto{
+    height:40%;
+    width: 80%;
+}
+
+#enviarCaracteristicasDoProduto{
+    height: 20px;
+    width: 100px;
+}
+
+#sairDaAba{
+    height: 20px;
+    width: 100px;
+}
+
+.buttaoRemoverProdutos{
+    height: 100%;
+    width: 50%;
+}
+
+
+
+
+
+/* aba mensagem ====================================================================================*/
+#main-mensagem{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    width: 85%;
+    border: solid black 1px;
+    overflow: scroll;
+}
+
+.caracteristicas{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 5%;
+    width: 80%;
+    background-color: rgb(180, 180, 180);
+}
+
+.mensagem-adicionados{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 30px;
+    height: 5%;
+    width: 80%;
+    background-color: rgb(180, 180, 180);
+}
+
+.bottoes-div{
+    height: 100%;
+    width: 150px;
+    border: solid black 1px;
+}
+
+.butaoVerMensagem{
+    height: 100%;
+    width: 33%;
+}
+
+.butaoRemoverMensagem{
+    height: 100%;
+    width: 33%;
+}
+
+/* ver mensagem */
+
+.filtroDeVerMensagem{
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    background-color: gray;  
+}
+.abaDeVerMensagem{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    height: 75%;
+    width: 50%;
+    background-color: white;
+    border-radius: 10px;
+}
+
+
+
+.divDoNomeENumeroDaMensagem{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 50px;
+    width: 70%;
+    border: solid black 1px;
+}
+
+.nomeDaMensagem{
+    height: 30px;
+    width: 40%;
+    border-radius: 5px;
+    background-color: rgb(216, 216, 216);
+    border: solid black 1px;
+}
+
+.numeroDaMensagem{
+    height: 30px;
+    width: 40%;
+    background-color: rgb(216, 216, 216);
+    border-radius: 5px;
+    border: solid black 1px;
+}
+
+
+.emailDoCliente{
+    height: 30px;
+    width: 70%;
+    border-radius: 5px;
+    background-color: rgb(216, 216, 216);
+    border: solid black 1px;
+}
+
+
+.mensagemDoCliente{
+    height: 400px;
+    width: 70%;
+    border-radius: 5px;
+    background-color: rgb(216, 216, 216);
+    border: solid black 1px;
+}
+
+
+.buttoesDeResponderOuCancelarMensagem{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 50px;
+    width: 70%;
+}
+
+.buttonResponderMensagem{
+    height: 30px;
+    width: 150px;
+    border-radius: 5px;
+}
+
+.buttonCancelarMensagem{
+    height: 30px;
+    width: 150px;
+    border-radius: 5px;
+}
+
+
+/* aba sobreNos ====================================================================================*/
+
+
+#main-sobreNos{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    height: 100%;
+    width: 85%;
+    border: solid black 1px;
+}
+
+#titulo{
+    text-align: center;
+    height: 5%;
+    width: 80%;
+    font-size: 20px;
+}
+
+#detalhes{
+    height: 80%;
+    width: 80%;
+    font-size: 15px;
+}

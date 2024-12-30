@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            width: 100vw;
+            background-color: red;
+        }
+
+        #caixa-dos-inputs{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+            height: 30%;
+            width: 30%;
+            border: solid black 1px;
+            border-radius: 10px;
+            background-color: white;
+        }
+
+        #usuario{
+            height: 30px;
+            width: 90%;
+        }
+
+        #senha{
+            height: 30px;
+            width: 90%;
+        }
+
+        #avancar{
+            height: 30px;
+            width: 150px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="caixa-dos-inputs">
+        <input type="text" id="usuario" placeholder="Usuario">
+        <input type="password" id="senha" placeholder="Senha">
+        <button id="avancar">Avançar</button>
+    </div>
+
+
+    <script>
+        const usuarioInput = document.querySelector('#usuario')
+        const senhaInput = document.querySelector('#senha')
+        const buttonAvancar = document.querySelector('#avancar')
+
+        function enviarSenhaEUsuario(e) {
+            console.log(e)
+            let tecla = e.key
+            if (tecla === 'Enter' || e.target.id === "avancar") {
+                const usuario = usuarioInput.value
+                const senha = senhaInput.value
+
+                fetch('/usuarioESenha', {
+                    method: 'POST',
+                    body: JSON.stringify({ usuario, senha })
+                }).then(resposta => resposta.json()).then(resposta => {
+                    if (resposta.acessos === "permitido") {
+                        location.assign('./produtosNoAdmin')
+                        usuarioInput.value = ""
+                        senhaInput.value = ""
+                    } else {
+                        window.alert('O usuario ou a senha está incorreta')
+                    }
+                })
+            }
+        }
+
+        buttonAvancar.addEventListener('click', enviarSenhaEUsuario)
+        document.addEventListener('keydown', enviarSenhaEUsuario)
+    </script>
+</body>
+
+</html>

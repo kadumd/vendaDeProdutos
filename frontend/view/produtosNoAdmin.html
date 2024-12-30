@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/admin/produtosNoAdmin.css">
+</head>
+
+<body>
+    <header>
+        <ul>
+            <a href="/produtosNoAdmin">Produtos</a>
+            <a id="aba-mensagem">Mensagens</a>
+            <a id="aba-sobreNos">Sobre Nós</a>
+            <a href="/">Voltar</a>
+        </ul>
+    </header>
+    <main id="main-produtos">
+        <div class="caracteristicas">
+            <h2>Id</h2>
+            <h2>Nome</h2>
+            <h2>Foto</h2>
+            <h2>Pedidos</h2>
+            <h2>Edição</h2>
+            <button id="adicionar-aba">+</button>
+        </div>
+    </main>
+
+    <!-- aba escondida -->
+    <div id="filtro">
+        <div id="caixa">
+            <input type="text" id="nome-do-produto" placeholder="Nome do produto">
+            <input type="text" id="foto-do-produto" placeholder="Foto do produto">
+            <textarea name="" id="caracteristicas-do-produto"></textarea>
+            <div id="buttoes">
+                <button id="enviarCaracteristicasDoProduto">Enviar</button>
+                <button id="sairDaAba">Sair</button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- aba escondida "mensagem" ================================================================ -->
+    <main id="main-mensagem">
+        <div class="caracteristicas">
+            <h2>Id</h2>
+            <h2>Nome</h2>
+            <h2>E-mail</h2>
+            <h2>Edição</h2>
+        </div>
+    </main>
+
+
+
+
+    <!-- aba escondida "sobre Nos" ================================================================ -->
+    <main id="main-sobreNos">
+        <input type="text" id="titulo" placeholder="Titulo do texto">
+        <textarea name="" id="detalhes" placeholder="texto"></textarea>
+
+        <button id="envio">Enviar os dados do texto</button>
+    </main>
+
+
+    <script type="module">
+        const mainProdutos = document.querySelector('#main-produtos')
+
+        fetch('/bancoProdutos').then(r => r.json()).then(response => {
+            response.forEach(e => {
+                console.log(e.nome)
+                const produtosAdicionados = document.createElement('div')
+                produtosAdicionados.classList.add("produtos-adicionados")
+
+                const id = document.createElement('h2')
+                id.textContent = e.id
+
+                const nome = document.createElement('h2')
+                nome.textContent = e.nome
+
+                const foto = document.createElement('h2')
+                foto.textContent = e.foto
+
+                const pedido = document.createElement('h2')
+                pedido.textContent = e.pedido
+
+                const buttoes = document.createElement('div')
+                buttoes.classList.add('buttoes-div')
+
+                const buttaoRemoverProdutos = document.createElement('img')
+                buttaoRemoverProdutos.src = 'https://static.vecteezy.com/ti/vetor-gratis/p2/568123-icone-de-lixeira-gr%C3%A1tis-vetor.jpg'
+                buttaoRemoverProdutos.classList.add('buttaoRemoverProdutos')
+
+                const alinhar = document.createElement('div')
+                alinhar.classList.add('alinhar')
+
+
+                buttoes.appendChild(buttaoRemoverProdutos)
+                produtosAdicionados.appendChild(id)
+                produtosAdicionados.appendChild(nome)
+                produtosAdicionados.appendChild(foto)
+                produtosAdicionados.appendChild(pedido)
+                produtosAdicionados.appendChild(buttoes)
+                produtosAdicionados.appendChild(alinhar)
+                mainProdutos.appendChild(produtosAdicionados)
+
+                buttaoRemoverProdutos.addEventListener('click', removerProduto)
+            });
+        })
+
+        function removerProduto(params) {
+            console.log(params.target.parentElement.parentElement.children['1']['textContent'])
+            let nome = params.target.parentElement.parentElement.children['1']['textContent']
+            // div.remove()
+
+            const filtroDoRemoverProduto = document.createElement('div')
+            filtroDoRemoverProduto.classList.add("filtroDoRemoverProduto")
+
+            const abaDoRemoverProduto = document.createElement('div')
+            abaDoRemoverProduto.classList.add('abaDoRemoverProduto')
+
+            const mensagemDeConfirmacao = document.createElement('div')
+            mensagemDeConfirmacao.textContent = `Deseja realmente remover o produto: ${nome}`
+            mensagemDeConfirmacao.classList.add('mensagemDeConfirmacao')
+
+
+            const buttoesDeConfirmarECancelarRemocao = document.createElement('div')
+            buttoesDeConfirmarECancelarRemocao.classList.add('buttoesDeConfirmarECancelarRemocao')
+
+            const buttonConfirmarRemocao = document.createElement('button')
+            buttonConfirmarRemocao.textContent = 'Confirmar'
+            buttonConfirmarRemocao.classList.add('buttonConfirmarRemocao')
+
+            const buttonCancelarRemocao = document.createElement("button")
+            buttonCancelarRemocao.textContent = 'Cancelar'
+            buttonCancelarRemocao.classList.add('buttonCancelarRemocao')
+
+
+            abaDoRemoverProduto.appendChild(mensagemDeConfirmacao)
+            abaDoRemoverProduto.appendChild(buttoesDeConfirmarECancelarRemocao)
+            buttoesDeConfirmarECancelarRemocao.appendChild(buttonConfirmarRemocao)
+            buttoesDeConfirmarECancelarRemocao.appendChild(buttonCancelarRemocao)
+            filtroDoRemoverProduto.appendChild(abaDoRemoverProduto)
+            document.body.appendChild(filtroDoRemoverProduto)
+
+            buttonCancelarRemocao.addEventListener('click', () => {
+                filtroDoRemoverProduto.remove()
+            })
+
+            buttonConfirmarRemocao.addEventListener('click', () => {
+                fetch('/removerProduto', {
+                    method: 'post',
+                    body: JSON.stringify(nome)
+                })
+            })
+        }
+
+
+
+        // execuções --------------------------------------
+        const filtro = document.querySelector("#filtro")
+        const adicionarAba = document.querySelector("#adicionar-aba")
+        const butaoParaEnviarCaracteristicas = document.querySelector("#enviarCaracteristicasDoProduto")
+        const sairDaAba = document.querySelector("#sairDaAba")
+
+        const nomeDoProduto = document.querySelector("#nome-do-produto")
+        const fotoDoProduto = document.querySelector("#foto-do-produto")
+        const caracteristicasDoProduto = document.querySelector("#caracteristicas-do-produto")
+
+        function apareca() {
+            filtro.style.display = "flex"
+        }
+
+        function suma() {
+            filtro.style.display = "none"
+        }
+
+        function envioDosProdutos() {
+            let nome = nomeDoProduto.value
+            let foto = fotoDoProduto.value
+            let caracteristicas = caracteristicasDoProduto.value
+
+            fetch('/enviarOsDadosDoProduto', {
+                method: "POST",
+                body: JSON.stringify({ pedido: 0, nome, foto, caracteristicas })
+            })
+        }
+
+        butaoParaEnviarCaracteristicas.addEventListener("click", envioDosProdutos)
+        adicionarAba.addEventListener("click", apareca)
+        sairDaAba.addEventListener("click", suma)
+
+
+        // aba "mensagem" ====================================================================================================== -->
+
+        const abaMensagem = document.querySelector("#aba-mensagem")
+        const mainMensagem = document.querySelector('#main-mensagem')
+        function abrirAbaMensagem() {
+            mainMensagem.style.display = 'flex'
+            mainProdutos.style.display = "none"
+            mainSobreNos.style.display = "none"
+        }
+
+        abaMensagem.addEventListener("click", abrirAbaMensagem)
+
+
+
+        fetch('/bancoMensagem').then(r => r.json()).then(response => {
+            response.forEach(e => {
+                console.log(e.nome)
+                const produtosAdicionados = document.createElement('div')
+                produtosAdicionados.classList.add("mensagem-adicionados")
+
+                const id = document.createElement('h2')
+                id.textContent = e.id
+
+                const nome = document.createElement('h2')
+                nome.textContent = e.nome
+
+                const eMail = document.createElement('h2')
+                eMail.textContent = e.eMail
+
+                const numero = document.createElement('h2')
+                numero.style.display = 'none'
+                numero.textContent = e.numero
+
+                const mensagem = document.createElement('h2')
+                mensagem.style.display = 'none'
+                mensagem.textContent = e.mensagem
+
+                const bottoes = document.createElement('div')
+                bottoes.classList.add('bottoes-div')
+
+                const butaoVerMensagem = document.createElement('img')
+                butaoVerMensagem.src = "https://static.vecteezy.com/system/resources/previews/000/576/988/original/eye-icon-vector-illustration.jpg"
+                butaoVerMensagem.classList.add('butaoVerMensagem')
+
+                const butaoRemoverMensagem = document.createElement('img')
+                butaoRemoverMensagem.src = 'https://static.vecteezy.com/ti/vetor-gratis/p2/568123-icone-de-lixeira-gr%C3%A1tis-vetor.jpg'
+                butaoRemoverMensagem.classList.add('butaoRemoverMensagem')
+
+                bottoes.appendChild(butaoVerMensagem)
+                bottoes.appendChild(butaoRemoverMensagem)
+                produtosAdicionados.appendChild(id)
+                produtosAdicionados.appendChild(nome)
+                produtosAdicionados.appendChild(eMail)
+                produtosAdicionados.appendChild(numero)
+                produtosAdicionados.appendChild(mensagem)
+                produtosAdicionados.appendChild(bottoes)
+                mainMensagem.appendChild(produtosAdicionados)
+
+                butaoVerMensagem.addEventListener('click', verMensagem)
+
+                butaoRemoverMensagem.addEventListener('click', (params) => {
+                    let nome = params.target.parentElement.parentElement.children['1']['textContent']
+
+                    fetch('/removerMensagem', {
+                        method: 'post',
+                        body: JSON.stringify(nome)
+                    })
+                })
+            });
+        })
+
+        function verMensagem(params) {
+            console.log(params)
+            console.log(params.target.parentElement.parentElement.children['1']['textContent'])
+
+            const filtroDeVerMensagem = document.createElement('div')
+            filtroDeVerMensagem.classList.add("filtroDeVerMensagem")
+
+            const abaDeVerMensagem = document.createElement('div')
+            abaDeVerMensagem.classList.add('abaDeVerMensagem')
+
+            const divDoNomeENumeroDaMensagem = document.createElement('div')
+            divDoNomeENumeroDaMensagem.classList.add('divDoNomeENumeroDaMensagem')
+
+            const nomeDaMensagem = document.createElement('div')
+            nomeDaMensagem.textContent = params.target.parentElement.parentElement.children['1']['textContent']
+            nomeDaMensagem.classList.add('nomeDaMensagem')
+
+            const numeroDaMensagem = document.createElement('div')
+            numeroDaMensagem.textContent = params.target.parentElement.parentElement.children['3']['textContent']
+            numeroDaMensagem.classList.add('numeroDaMensagem')
+
+            const emailDoCliente = document.createElement('div')
+            emailDoCliente.textContent = params.target.parentElement.parentElement.children['2']['textContent']
+            emailDoCliente.classList.add('emailDoCliente')
+
+            const mensagemDoCliente = document.createElement('div')
+            mensagemDoCliente.textContent = params.target.parentElement.parentElement.children['1']['textContent']
+            mensagemDoCliente.classList.add('mensagemDoCliente')
+
+            const buttoesDeResponderOuCancelarMensagem = document.createElement('div')
+            buttoesDeResponderOuCancelarMensagem.classList.add('buttoesDeResponderOuCancelarMensagem')
+
+            const buttonResponderMensagem = document.createElement('button')
+            buttonResponderMensagem.textContent = 'Responder'
+            buttonResponderMensagem.classList.add('buttonResponderMensagem')
+
+            const buttonCancelarMensagem = document.createElement("button")
+            buttonCancelarMensagem.textContent = 'Cancelar'
+            buttonCancelarMensagem.classList.add('buttonCancelarMensagem')
+
+
+
+
+            abaDeVerMensagem.appendChild(divDoNomeENumeroDaMensagem)
+            divDoNomeENumeroDaMensagem.appendChild(nomeDaMensagem)
+            divDoNomeENumeroDaMensagem.appendChild(numeroDaMensagem)
+
+            abaDeVerMensagem.appendChild(emailDoCliente)
+            abaDeVerMensagem.appendChild(mensagemDoCliente)
+
+            abaDeVerMensagem.appendChild(buttoesDeResponderOuCancelarMensagem)
+            buttoesDeResponderOuCancelarMensagem.appendChild(buttonResponderMensagem)
+            buttoesDeResponderOuCancelarMensagem.appendChild(buttonCancelarMensagem)
+
+            filtroDeVerMensagem.appendChild(abaDeVerMensagem)
+            document.body.appendChild(filtroDeVerMensagem)
+
+
+            buttonCancelarMensagem.addEventListener('click', () => {
+                filtroDeVerMensagem.remove()
+            })
+
+            buttonResponderMensagem.addEventListener('click', () => {
+                filtroDeVerMensagem.remove()
+            })
+        }
+
+        // aba "sobre Nos" ===================================================================================================== -->
+
+        const abaSobreNos = document.querySelector("#aba-sobreNos")
+        const mainSobreNos = document.querySelector('#main-sobreNos')
+        function abrirAbaSobreNos() {
+            mainSobreNos.style.display = 'flex'
+            mainProdutos.style.display = "none"
+            mainMensagem.style.display = "none"
+        }
+
+        abaSobreNos.addEventListener("click", abrirAbaSobreNos)
+
+
+        const tituloDoTexto = document.querySelector("#titulo")
+        const detalhesDoTexto = document.querySelector("#detalhes")
+        const butaoParaEnviarTexto = document.querySelector("#envio")
+
+        function envioDoTexto() {
+            let titulo = tituloDoTexto.value
+            let texto = detalhesDoTexto.value
+
+            fetch('/enviarOsDadosDoTexto', {
+                method: "POST",
+                body: JSON.stringify({ titulo, texto })
+            })
+        }
+
+        butaoParaEnviarTexto.addEventListener("click", envioDoTexto)
+    </script>
+</body>
+
+</html>
