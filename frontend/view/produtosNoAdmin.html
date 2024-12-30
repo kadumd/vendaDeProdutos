@@ -11,7 +11,7 @@
 <body>
     <header>
         <ul>
-            <a href="/produtosNoAdmin">Produtos</a>
+            <a href="/produtosNoAdmin" id="aba-produtos">Produtos</a>
             <a id="aba-mensagem">Mensagens</a>
             <a id="aba-sobreNos">Sobre Nós</a>
             <a href="/">Voltar</a>
@@ -113,7 +113,6 @@
         function removerProduto(params) {
             console.log(params.target.parentElement.parentElement.children['1']['textContent'])
             let nome = params.target.parentElement.parentElement.children['1']['textContent']
-            // div.remove()
 
             const filtroDoRemoverProduto = document.createElement('div')
             filtroDoRemoverProduto.classList.add("filtroDoRemoverProduto")
@@ -359,6 +358,27 @@
         }
 
         butaoParaEnviarTexto.addEventListener("click", envioDoTexto)
+
+        //onde o cliente está =================================================================================================
+        const abaProdutos = document.querySelector('#aba-produtos')
+
+        abaProdutos.addEventListener('click', ()=>{
+            abaProdutos.style.backgroundColor = 'gray'
+            abaMensagem.style.backgroundColor = 'rgb(177, 177, 177)'
+            abaSobreNos.style.backgroundColor = 'rgb(177, 177, 177)'
+        })
+
+        abaMensagem.addEventListener('click', ()=>{
+            abaProdutos.style.backgroundColor = 'rgb(177, 177, 177)'
+            abaMensagem.style.backgroundColor = 'gray'
+            abaSobreNos.style.backgroundColor = 'rgb(177, 177, 177)'
+        })
+
+        abaSobreNos.addEventListener('click', ()=>{
+            abaProdutos.style.backgroundColor = 'rgb(177, 177, 177)'
+            abaMensagem.style.backgroundColor = 'rgb(177, 177, 177)'
+            abaSobreNos.style.backgroundColor = 'gray'
+        })
     </script>
 </body>
 

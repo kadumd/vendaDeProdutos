@@ -35,13 +35,39 @@ a{
     color: black;
 }
 
+#aba-produtos{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 100%;
+    background-color: gray;
+}
+
+#aba-faleConosco{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 100%;
+    background-color: rgb(177, 177, 177);
+}
+
+#aba-sobreNos{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 100%;
+    background-color: rgb(177, 177, 177);
+}
+
 #main-produtos{
     display: flex;
     flex-direction: column;
     align-items: center;
     height: 100%;
     width: 85%;
-    border: solid black 1px;
     overflow: scroll;
 }
 
@@ -72,7 +98,6 @@ a{
 .buttoes-div{
     height: 100%;
     width: 100px;
-    border: solid black 1px;
 }
 
 .alinhar{
@@ -197,7 +222,6 @@ a{
     align-items: center;
     height: 100%;
     width: 85%;
-    border: solid black 1px;
     overflow: scroll;
 }
 
@@ -221,9 +245,11 @@ a{
 }
 
 .bottoes-div{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
     height: 100%;
     width: 150px;
-    border: solid black 1px;
 }
 
 .butaoVerMensagem{
@@ -266,7 +292,6 @@ a{
     justify-content: space-between;
     height: 50px;
     width: 70%;
-    border: solid black 1px;
 }
 
 .nomeDaMensagem{
@@ -335,7 +360,6 @@ a{
     justify-content: space-around;
     height: 100%;
     width: 85%;
-    border: solid black 1px;
 }
 
 #titulo{
