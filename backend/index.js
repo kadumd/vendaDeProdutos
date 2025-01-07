@@ -1,7 +1,6 @@
 const http = require('http')
 const fs = require('fs');
 const logados = {}
-const { access } = require('fs/promises');
 
 const servidor = http.createServer((pedido, resposta) => {
     console.log(pedido.url)
@@ -16,14 +15,14 @@ const servidor = http.createServer((pedido, resposta) => {
             resposta.end(fs.readFileSync('./frontend/css/produtosNoSite.css'));
             break
 
-        //admin -------------------------------------------------------
+        //admin ====================================================================================================================
 
         case '/produtosNoAdmin':
             const logge = logados[pedido.socket.remoteAddress]
 
             if (!logge) {
                 resposta.writeHead(400)
-                resposta.end(JSON.stringify('./frontend/view/404.html'))
+                resposta.end(fs.readFileSync('./frontend/view/404.html'))
                 return;
             }
             resposta.writeHead(200, { "Content-Type": "text/html" });
@@ -35,17 +34,30 @@ const servidor = http.createServer((pedido, resposta) => {
             resposta.end(fs.readFileSync('./frontend/css/produtosNoAdmin.css'));
             break
 
-        //login -------------------------------------------------------
+        //login ====================================================================================================================
 
         case '/login.html':
             resposta.writeHead(200, { "Content-Type": "text/html" });
             resposta.end(fs.readFileSync('./frontend/view/login.html'));
             break
 
+        //404 ======================================================================================================================
 
-        // execucoes no servidor "json"
+        case '/frontend/view/404.html':
+            resposta.writeHead(200, { "Content-Type": "text/html" });
+            resposta.end(fs.readFileSync('./frontend/view/404.html'));
+            break
+
+        // execucoes no servidor "json" ============================================================================================
 
         case '/enviarOsDadosDoProduto':
+            const logge1 = logados[pedido.socket.remoteAddress]
+
+            if (!logge1) {
+                resposta.writeHead(400)
+                resposta.end(fs.readFileSync('./frontend/view/404.html'))
+                return;
+            }
             pedido.on('data', (body) => {
                 const envio = JSON.parse(body)
                 let dados = JSON.parse(fs.readFileSync('./frontend/src/produtos.json'))
@@ -56,7 +68,6 @@ const servidor = http.createServer((pedido, resposta) => {
                 resposta.end(JSON.stringify('funcionou'));
             })
             break
-
 
         case '/usuarioESenha':
             pedido.on('data', (body) => {
@@ -79,9 +90,14 @@ const servidor = http.createServer((pedido, resposta) => {
             })
             break
 
-
-
         case '/enviarOsDadosDoTexto':
+            const logge2 = logados[pedido.socket.remoteAddress]
+
+            if (!logge2) {
+                resposta.writeHead(400)
+                resposta.end(fs.readFileSync('./frontend/view/404.html'))
+                return;
+            }
             pedido.on('data', (body) => {
                 const envio = JSON.parse(body)
                 let dados = JSON.parse(fs.readFileSync('./frontend/src/sobreNos.json'))
@@ -106,8 +122,14 @@ const servidor = http.createServer((pedido, resposta) => {
             })
             break
 
-
         case '/removerProduto':
+            const logge3 = logados[pedido.socket.remoteAddress]
+
+            if (!logge3) {
+                resposta.writeHead(400)
+                resposta.end(fs.readFileSync('./frontend/view/404.html'))
+                return;
+            }
             pedido.on('data', (body) => {
                 const envio = JSON.parse(body)
                 let dados = JSON.parse(fs.readFileSync('./frontend/src/produtos.json'))
@@ -126,8 +148,14 @@ const servidor = http.createServer((pedido, resposta) => {
             })
             break
 
-
         case '/removerMensagem':
+            const logge4 = logados[pedido.socket.remoteAddress]
+
+            if (!logge4) {
+                resposta.writeHead(400)
+                resposta.end(fs.readFileSync('./frontend/view/404.html'))
+                return;
+            }
             pedido.on('data', (body) => {
                 const envio = JSON.parse(body)
                 let dados = JSON.parse(fs.readFileSync('./frontend/src/mensagem.json'))
@@ -146,9 +174,8 @@ const servidor = http.createServer((pedido, resposta) => {
             })
             break
 
+        // dados tipo GET ==========================================================================================================
 
-
-        // dados tipo GET
         case '/bancoProdutos':
             resposta.writeHead(200, { "Content-Type": "application/json" });
             resposta.end(fs.readFileSync('./frontend/src/produtos.json'));

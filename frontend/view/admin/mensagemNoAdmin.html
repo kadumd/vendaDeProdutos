@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/admin/mensagemNoAdmin.css">
+</head>
+
+<body>
+    <header>
+        <ul>
+            <a href="/produtosNoAdmin">Produtos</a>
+            <a href="/mensagemNoAdmin">Mensagens</a>
+            <a href="/sobreNosAdmin">Sobre Nós</a>
+        </ul>
+    </header>
+
+    <main id="main-mensagem">
+        <div class="caracteristicas">
+            <h2>Id</h2>
+            <h2>Nome</h2>
+            <h2>E-mail</h2>
+            <h2>Edição</h2>
+        </div>
+    </main>
+
+    <script type="module">
+        const main = document.querySelector('main')
+
+        fetch('/bancoMensagem').then(r => r.json()).then(response => {
+            response.forEach(e => {
+                console.log(e.nome)
+                const produtosAdicionados = document.createElement('div')
+                produtosAdicionados.classList.add("mensagem-adicionados")
+
+                const id = document.createElement('h2')
+                id.textContent = e.id
+
+                const nome = document.createElement('h2')
+                nome.textContent = e.nome
+
+                const eMail = document.createElement('h2')
+                eMail.textContent = e.eMail
+
+                const bottoes = document.createElement('h2')
+                bottoes.classList.add('bottoes-div')
+
+                produtosAdicionados.appendChild(id)
+                produtosAdicionados.appendChild(nome)
+                produtosAdicionados.appendChild(eMail)
+                produtosAdicionados.appendChild(bottoes)
+                main.appendChild(produtosAdicionados)
+            });
+        })
+    </script>
+</body>
+
+</html>

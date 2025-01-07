@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/admin/sobreNosAdmin.css">
+</head>
+
+<body>
+    <header>
+        <ul>
+            <a href="/produtosNoAdmin">Produtos</a>
+            <a href="/mensagemNoAdmin">Mensagens</a>
+            <a href="/sobreNosAdmin">Sobre Nós</a>
+        </ul>
+    </header>
+    <main id="main-sobreNos">
+        <input type="text" id="titulo" placeholder="Titulo do texto">
+        <textarea name="" id="detalhes" placeholder="texto"></textarea>
+
+        <button id="envio">Enviar os dados do texto</button>
+    </main>
+
+    <script>
+        const tituloDoTexto = document.querySelector("#titulo")
+        const detalhesDoTexto = document.querySelector("#detalhes")
+        const butaoParaEnviar = document.querySelector("#envio")
+
+        function execute() {
+            let titulo = tituloDoTexto.value
+            let texto = detalhesDoTexto.value
+
+            fetch('/enviarOsDadosDoTexto', {
+                method: "POST",
+                body: JSON.stringify({ titulo, texto })
+            })
+        }
+
+        butaoParaEnviar.addEventListener("click", execute)
+    </script>
+</body>
+
+</html>
