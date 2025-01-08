@@ -122,6 +122,7 @@ const servidor = http.createServer((pedido, resposta) => {
             })
             break
 
+        //tenho que fazer remover pelo id, pq se tiver mais de um produto com o mesmo nome ambos vão ser excluidos
         case '/removerProduto':
             const logge3 = logados[pedido.socket.remoteAddress]
 
